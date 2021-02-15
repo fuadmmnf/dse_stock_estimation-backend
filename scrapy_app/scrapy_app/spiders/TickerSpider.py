@@ -2,7 +2,7 @@ from datetime import datetime
 
 from scrapy import Spider, Request
 
-from scrapperArchive.items import TickerItem
+from ..items import TickerItem
 
 
 # Dev

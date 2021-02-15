@@ -3,7 +3,7 @@ from datetime import datetime, date
 from scrapy import Spider, FormRequest
 from scrapy.selector import Selector
 
-from scrapperArchive.items import DseMarketSummaryItem
+from ..items import DseMarketSummaryItem
 
 
 # Dev

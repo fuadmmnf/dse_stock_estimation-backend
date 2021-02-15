@@ -1,6 +1,6 @@
 from scrapy import Spider
 
-from scrapperArchive.items import CategoryItem
+from ..items import CategoryItem
 
 
 class CategorySpider(Spider):

@@ -1,7 +1,7 @@
 from datetime import datetime, date
 from scrapy import Spider, Request
 from scrapy.selector import Selector
-from scrapperArchive.items import DayEndArchiveItem
+from ..items import DayEndArchiveItem
 
 
 class DayEndArchiveSpider(Spider):
@@ -10,7 +10,7 @@ class DayEndArchiveSpider(Spider):
 
     name = "dayendarchive"
     urls = [
-        'https://www.dsebd.org/day_end_archive.php?startDate=' + start_date + '&endDate=' + end_date + '&inst=All%20Instrument&archive=data',
+        'https://www.dsebd.org/day_end_archive.php?startDate=' + start_date.__str__() + '&endDate=' + end_date.__str__() + '&inst=All%20Instrument&archive=data',
     ]
 
     def start_requests(self):
@@ -26,7 +26,7 @@ class DayEndArchiveSpider(Spider):
 
         for tr in list_tr[1:]:
             list_td = tr.xpath('.//td')
-            
+
             item = DayEndArchiveItem()
             item['date'] = datetime.strptime(list_td[1].xpath('text()').extract_first(), '%Y-%m-%d')
             item['trading_code'] = list_td[2].xpath('.//a/text()').extract_first().strip()

@@ -19,12 +19,13 @@ class DseMarketSummaryPipeline(object):
     def from_crawler(cls, crawler):
         return cls(
             mongo_uri=crawler.settings.get('MONGO_URI'),
-            mongo_db=crawler.settings.get('MONGO_DATABASE', 'items')
+            mongo_db=crawler.settings.get('MONGO_DATABASE', 'dhaka_stock_exchange')
         )
 
     def open_spider(self, spider):
         self.client = pymongo.MongoClient(self.mongo_uri)
         self.db = self.client[self.mongo_db]
+        self.db[self.collection_name].drop()
 
     def close_spider(self, spider):
         self.client.close()
@@ -53,6 +54,7 @@ class DayEndArchivePipeline(object):
     def open_spider(self, spider):
         self.client = pymongo.MongoClient(self.mongo_uri)
         self.db = self.client[self.mongo_db]
+        self.db[self.collection_name].drop()
 
     def close_spider(self, spider):
         self.client.close()
@@ -82,6 +84,7 @@ class TickerPipeline(object):
     def open_spider(self, spider):
         self.client = pymongo.MongoClient(self.mongo_uri)
         self.db = self.client[self.mongo_db]
+        self.db[self.collection_name].drop()
 
     def close_spider(self, spider):
         self.client.close()
@@ -131,6 +134,7 @@ class CategoryPipeline(object):
     def open_spider(self, spider):
         self.client = pymongo.MongoClient(self.mongo_uri)
         self.db = self.client[self.mongo_db]
+        self.db[self.collection_name].drop()
 
     def close_spider(self, spider):
         self.client.close()

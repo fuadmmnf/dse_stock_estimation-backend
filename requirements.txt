@@ -1,4 +1,5 @@
 APScheduler
 Scrapy
 scrapyd
+scrapyd-client
 python-scrapyd-api

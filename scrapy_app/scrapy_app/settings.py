@@ -1,13 +1,28 @@
+
 # -*- coding: utf-8 -*-
+import os
+import sys
 
 # Scrapy settings for scrapy_app project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
 #
-#     http://doc.scrapy.org/en/latest/topics/settings.html
-#     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
+#     https://doc.scrapy.org/en/latest/topics/settings.html
+#     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
+#     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+
+# DJANGO INTEGRATION
+
+sys.path.append(os.path.dirname(os.path.abspath('.')))
+# Do not forget the change iCrawler part based on your project name
+os.environ['DJANGO_SETTINGS_MODULE'] = 'stock_estimation_backend.settings'
+
+# This is required only if Django Version > 1.8
+import django
+django.setup()
+
+
 
 BOT_NAME = 'scrapy_app'
 
@@ -91,5 +106,5 @@ ITEM_PIPELINES = {
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MONGO_URI = "dsebd_mongo"
-MONGO_DATABASE = "scrapper_archive"
+MONGO_URI = "mongodb://127.0.0.1:27017"
+MONGO_DATABASE = "scrapper_dsebd"

@@ -1,0 +1,4 @@
+APScheduler
+Scrapy
+scrapyd
+python-scrapyd-api

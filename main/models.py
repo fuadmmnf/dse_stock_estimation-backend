@@ -6,7 +6,7 @@ from django.utils import timezone
 
 
 class Company(models.Model):
-    unique_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    unique_id = models.UUIDField(primary_key=True, blank=True, default=uuid.uuid4)
     data = models.TextField()  # this stands for our crawled data
     date = models.DateTimeField(default=timezone.now)
 
@@ -23,15 +23,15 @@ class Company(models.Model):
         return self.unique_id
 
 class DailyData(models.Model):
-    unique_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    unique_id = models.UUIDField(primary_key=True, blank=True, default=uuid.uuid4)
     trading_code = models.CharField(max_length=100, null=False)
     date = models.DateTimeField(default=timezone.now)
-    last_traded_price = models.DecimalField()
-    high = models.DecimalField()
-    low = models.DecimalField()
-    closing_price = models.DecimalField()
-    yesterdays_closing_price = models.DecimalField()
-    change = models.DecimalField()
+    last_traded_price = models.DecimalField(decimal_places=3)
+    high = models.DecimalField(decimal_places=3)
+    low = models.DecimalField(decimal_places=3)
+    closing_price = models.DecimalField(decimal_places=3)
+    yesterdays_closing_price = models.DecimalField(decimal_places=3)
+    change = models.DecimalField(decimal_places=3)
     trade = models.IntegerField()
-    value_mn = models.DecimalField()
-    volume = models.DecimalField()
+    value_mn = models.DecimalField(decimal_places=3)
+    volume = models.DecimalField(decimal_places=3)

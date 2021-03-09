@@ -4,7 +4,7 @@ from main.apps import MainConfig
 class DSEScrapingPipeline(object):
     def __process_sharedata(self, item):
         item = {k: v.replace(',', '').replace('--', '0') for k, v in item.items()}
-        company_data = DailyData.objects.filter(trading_code__exact=item['trading_code']).order_by('-date')[: 1]
+        company_data = DailyData.objects.filter(trading_code__exact=item['trading_code']).order_by('-parsed_date')[: 1]
 
         if len(company_data) > 0:
             company_data[0].trading_code = item['trading_code']

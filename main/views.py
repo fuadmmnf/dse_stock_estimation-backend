@@ -1,6 +1,6 @@
 from django.core import serializers
 from django.http import JsonResponse
-from django.utils.timezone import datetime #important if using timezones
+from datetime import datetime, timedelta
 from django.views.decorators.csrf import csrf_exempt
 from .models import Company, DailyData
 
@@ -24,7 +24,7 @@ def get_predictions_by_date(request):
         return JsonResponse({'res': 'must be get request'})
 
 
-    daily_data = DailyData.objects.filter(date__day=datetime.now()).get()
+    daily_data = DailyData.objects.filter(parsed_date__gt=datetime.today() - timedelta(days=1)).all()
     return JsonResponse({'data': serializers.serialize('json', daily_data)})
 
 
@@ -35,6 +35,6 @@ def get_data_by_company(request, company_code):
 
     company_predictions = DailyData.objects \
                               .filter(trading_code__exact=company_code) \
-                              .order_by('-date')[:30]
+                              .order_by('-parsed_date')[:30]
 
     return JsonResponse({'data': serializers.serialize('json', company_predictions)}, safe=False)

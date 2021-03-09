@@ -6,7 +6,7 @@ from scrapy_app.dse_scraping.items import CompanyItem
 
 class DisplayCompanySpider(scrapy.Spider):
     name = "display_company"
-    start_urls = ['https://www.dse.com.bd/displayCompany.php?name='+ company.trading_code for company in CompanyItem.values()]
+    start_urls = ['https://www.dse.com.bd/displayCompany.php?name='+ company.trading_code for company in CompanyItem.django_model.objects.all()]
 
     def parse(self, response):
 
@@ -14,17 +14,16 @@ class DisplayCompanySpider(scrapy.Spider):
 
         company_name = response.xpath("//div[@id = 'section-to-print']/h2/i")
         company_name = company_name.xpath('text()').get()
-        company_name = company_name.encode('ascii', 'ignore').strip()
+        company_name = company_name.encode('ascii').strip()
 
         tables = response.xpath('//table[@id="company"]')
         first_table_items = tables[2].xpath('./tr/*')
         second_table_items = tables[10].xpath('./tr/*')
 
-        company_category = second_table_items[3].xpath('text()').get().encode('ascii', 'ignore').strip()
+        company_category = second_table_items[3].xpath('text()').get().encode('ascii').strip()
 
-        sector = first_table_items[-2].xpath('text()').get().encode('ascii', 'ignore').strip()
-        total_no_of_outstanding_securities = first_table_items[-4].xpath('text()').get().encode('ascii',
-                                                                                                'ignore').strip()
+        sector = first_table_items[-2].xpath('text()').get().encode('ascii').strip()
+        total_no_of_outstanding_securities = first_table_items[-4].xpath('text()').get().encode('ascii').strip()
 
         try:
             item = CompanyItem()

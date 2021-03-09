@@ -23,18 +23,18 @@ class CompanySpider(scrapy.Spider):
             body_content = div.xpath('./*')[1]
             for company in body_content.xpath('./*'):
                 item = company.xpath('text()').get()
-                items.append(item.encode('ascii','ignore'))
+                items.append(item.encode('ascii'))
 
 
             name_code_pairs = zip(items[0:][::2], items[1:][::2])
             for pair in name_code_pairs:
                 item = CompanyItem()
+                pair = [i.decode('utf-8').strip() for i in list(pair)]
+                # print(type(pair[0]))
 
-                pair = list(pair)
-                print(type(pair))
-
-                if ' ' in pair[0]: pair = self.swap_values(pair)
-                item['name'] = pair[1].strip('()')
+                if " " in pair[0] :
+                    pair = self.swap_values(pair)
+                item['name'] = pair[1][1: len(pair[1]) -1]
                 item['category'] = category
                 item['trading_code'] = pair[0]
                 item['sector'] = ''

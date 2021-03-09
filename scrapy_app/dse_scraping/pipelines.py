@@ -1,5 +1,5 @@
 from main.models import DailyData, Company
-
+from main.apps import MainConfig
 
 class DSEScrapingPipeline(object):
     def __process_sharedata(self, item):
@@ -25,6 +25,7 @@ class DSEScrapingPipeline(object):
                 high=float(item['high']),
                 low=float(item['low']),
                 closing_price=float(item['closing_price']),
+                predicted_next_day_closing_price= self.__predict_closing(item),
                 yesterdays_closing_price=float(item['yesterdays_closing_price']),
                 change=float(item['change']),
                 trade=int(item['trade']),
@@ -43,8 +44,11 @@ class DSEScrapingPipeline(object):
 
             )
         else:
-            company = Company.objects.filter(trading_code__exact=item['trading_code']).first()
-            company.sector = item['sector'],
+            print(item['sector'].decode("utf-8"))
+            company = Company.objects.filter(name__exact=item['name'].decode("utf-8"))[0]
+
+            sec = item['sector'].decode("utf-8")
+            company.sector = sec
             company.save()
 
     def process_item(self, item, spider):
@@ -53,3 +57,8 @@ class DSEScrapingPipeline(object):
         elif spider.name == 'display_company' or spider.name == 'companies':
             self.__process_companydata(item, spider.name == 'companies')
         return item
+
+    def __predict_closing(self, item):
+        company_model = MainConfig.dse_models[item['trading_code']]
+        # return company_model.predict([['macd', 'ema_long', 'sample_moving_average']])[0]
+        return 0.0

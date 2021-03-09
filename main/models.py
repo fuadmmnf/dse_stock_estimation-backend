@@ -7,20 +7,13 @@ from django.utils import timezone
 
 class Company(models.Model):
     unique_id = models.UUIDField(primary_key=True, blank=True, default=uuid.uuid4)
-    data = models.TextField()  # this stands for our crawled data
-    date = models.DateTimeField(default=timezone.now)
-
+    name = models.CharField(max_length=100, null=False)
+    trading_code = models.CharField(max_length=100, null=False)
+    sector = models.CharField(max_length=100, null=False)
+    category = models.CharField(max_length=100, null=False)
+    # total_no_of_outstanding_securities = models.IntegerField()
     # This is for basic and custom serialisation to return it to client as a JSON.
-    @property
-    def to_dict(self):
-        data = {
-            'data': json.loads(self.data),
-            'date': self.date
-        }
-        return data
 
-    def __str__(self):
-        return self.unique_id
 
 class DailyData(models.Model):
     unique_id = models.UUIDField(primary_key=True, blank=True, default=uuid.uuid4)

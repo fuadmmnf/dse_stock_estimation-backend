@@ -9,9 +9,3 @@ class DailyShareData(DjangoItem):
 
 class CompanyItem(DjangoItem):
     django_model = Company
-
-
-class DisplayCompanyItem(scrapy.Item):
-    name = scrapy.Field()
-    sector = scrapy.Field()
-    total_no_of_outstanding_securities = scrapy.Field()

@@ -37,7 +37,7 @@ class CompanySpider(scrapy.Spider):
                 item['name'] = pair[1].strip('()')
                 item['category'] = category
                 item['trading_code'] = pair[0]
-
+                item['sector'] = ''
                 yield item
 
     def swap_values(self, values):

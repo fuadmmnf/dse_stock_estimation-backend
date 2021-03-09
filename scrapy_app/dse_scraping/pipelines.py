@@ -1,9 +1,8 @@
-import uuid
-from main.models import DailyData
+from main.models import DailyData, Company
 
 
 class DSEScrapingPipeline(object):
-    def process_item(self, item, spider):
+    def __process_sharedata(self, item):
         item = {k: v.replace(',', '').replace('--', '0') for k, v in item.items()}
         company_data = DailyData.objects.filter(trading_code__exact=item['trading_code']).order_by('-date')[: 1]
 
@@ -33,4 +32,24 @@ class DSEScrapingPipeline(object):
                 volume=float(item['volume'])
 
             )
+
+    def __process_companydata(self, item, is_create):
+        if is_create:
+            Company.objects.create(
+                name=item['name'],
+                trading_code=item['trading_code'],
+                sector=item['sector'],
+                category=item['category'],
+
+            )
+        else:
+            company = Company.objects.filter(trading_code__exact=item['trading_code']).first()
+            company.sector = item['sector'],
+            company.save()
+
+    def process_item(self, item, spider):
+        if spider.name == 'latest_share':
+            self.__process_sharedata(item)
+        elif spider.name == 'display_company' or spider.name == 'companies':
+            self.__process_companydata(item, spider.name == 'companies')
         return item

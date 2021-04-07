@@ -12,6 +12,7 @@ class DSEScrapingPipeline(object):
             company_data[0].high = float(item['high'])
             company_data[0].low = float(item['low'])
             company_data[0].closing_price = float(item['closing_price'])
+            company_data[0].predicted_next_day_closing_price = self.__predict_closing(item),
             company_data[0].yesterdays_closing_price = float(item['yesterdays_closing_price'])
             company_data[0].change = float(item['change'])
             company_data[0].trade = int(item['trade'])
@@ -59,6 +60,6 @@ class DSEScrapingPipeline(object):
         return item
 
     def __predict_closing(self, item):
-        company_model = MainConfig.dse_models[item['trading_code']]
-        # return company_model.predict([['macd', 'ema_long', 'sample_moving_average']])[0]
-        return 0.0
+        ohlc = (item['open'] + item['high'] + item['low'] + item['closing']) / 4
+        predicted_ohlc = MainConfig.dse_models[item['trading_code']].predict([[ohlc]])[0]
+        return predicted_ohlc

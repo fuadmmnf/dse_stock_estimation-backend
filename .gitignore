@@ -116,3 +116,4 @@ GitHub.sublime-settings
 .history
 
 main/dse_estimator/models/*
+main/dse_estimator/scalers/*

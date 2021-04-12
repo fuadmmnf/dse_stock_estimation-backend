@@ -17,7 +17,6 @@ colorama==0.4.3
 constantly==15.1.0
 cryptography==3.4.6
 cssselect==1.1.0
-cupshelpers==1.0
 cycler==0.10.0
 dbus-python==1.2.16
 defer==1.0.4

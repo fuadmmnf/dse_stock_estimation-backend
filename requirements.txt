@@ -17,7 +17,6 @@ colorama==0.4.3
 constantly==15.1.0
 cssselect==1.1.0
 cycler==0.10.0
-dbus-python==1.2.16
 defer==1.0.4
 distro==1.4.0
 distro-info===0.10
@@ -75,10 +74,8 @@ pycairo==1.16.2
 pycparser==2.20
 pycricbuzz==2.4
 pycrypto==2.6.1
-pycups==1.9.73
 PyDispatcher==2.0.5
 Pygments==2.3.1
-PyGObject==3.36.0
 PyJWT==1.7.1
 pymacaroons==0.13.0
 pymongo==3.11.3

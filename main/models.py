@@ -23,7 +23,7 @@ class DailyData(models.Model):
     high = models.DecimalField(max_digits=13, decimal_places=3)
     low = models.DecimalField(max_digits=13, decimal_places=3)
     closing_price = models.DecimalField(max_digits=13, decimal_places=3)
-    predicted_next_day_closing_price = models.DecimalField(max_digits=13, decimal_places=3)
+    predicted_next_day_ohlc_price = models.DecimalField(max_digits=13, decimal_places=3)
     yesterdays_closing_price = models.DecimalField(max_digits=13, decimal_places=3)
     change = models.DecimalField(max_digits=13, decimal_places=3)
     trade = models.IntegerField()

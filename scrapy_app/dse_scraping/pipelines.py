@@ -2,6 +2,7 @@ from main.models import DailyData, Company
 import numpy as np
 import glob
 import os
+from pathlib import Path
 
 from keras.models import load_model
 import joblib
@@ -83,9 +84,9 @@ class DSEScrapingPipeline(object):
 
 
     def __load_scaler(self, trading_code):
-        filepath = os.path.dirname(os.path.abspath(__file__)) + '/dse_estimator/scalers/' + trading_code + '.pkl'
+        filepath = str(Path(os.path.dirname(os.path.abspath(__file__))).parents[1]) + '/main/dse_estimator/scalers/' + trading_code + '.pkl'
         return joblib.load(open(filepath, 'rb'))
 
     def __load_model(self, trading_code):
-        filepath = os.path.dirname(os.path.abspath(__file__)) + '/dse_estimator/models/' + trading_code + '.model'
+        filepath = str(Path(os.path.dirname(os.path.abspath(__file__))).parents[1]) + '/main/dse_estimator/models/' + trading_code + '.model'
         return load_model(filepath)

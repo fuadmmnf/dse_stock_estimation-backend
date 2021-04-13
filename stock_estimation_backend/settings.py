@@ -77,11 +77,13 @@ WSGI_APPLICATION = 'stock_estimation_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'scrapper_dsebd',
-        # 'CLIENT': {
-        #     'host': str(os.environ.get('MONGODB_URL')),
-        #     'authMechanism': 'SCRAM-SHA-1'
-        # }
+        "CLIENT": {
+           "name": "stockprediction",
+           "host": "mongodb+srv://spmbackend:spmbackend@stockprediction.yidpw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+           "username": "spmbackend",
+           "password": "spmbackend",
+           "authMechanism": "SCRAM-SHA-1",
+        },
     }
 }
 

@@ -1,1 +1,1 @@
-spmbackend: gunicorn stock_estimation_backend.wsgi --log-file -
+web: gunicorn stock_estimation_backend.wsgi --log-file -
